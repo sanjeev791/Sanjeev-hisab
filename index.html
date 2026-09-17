@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>मेरा हिसाब — Pro</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f4f7fb;color:#182230}
+.top{background:#1746c7;color:white;padding:18px 16px 22px;border-radius:0 0 24px 24px}.wrap{max-width:720px;margin:auto;padding:0 16px}
+.top h1{margin:0;font-size:26px}.top p{margin:4px 0 0;opacity:.88}.bar{display:flex;gap:8px;margin-top:14px}.bar button{flex:1}
+button{border:0;border-radius:12px;padding:12px 13px;font-weight:700;font-size:14px;cursor:pointer}.white{background:#fff;color:#1746c7}.blue{background:#1746c7;color:#fff}.soft{background:#eaf0ff;color:#1746c7}.danger{background:#feecec;color:#b42318}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:-7px}.card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 18px #0000000b}.muted{font-size:12px;color:#667085}.amt{font-size:22px;font-weight:800;margin-top:5px}.green{color:#14804a}.red{color:#c62828}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.section{display:flex;justify-content:space-between;align-items:center;margin:18px 0 9px}.section h2{font-size:18px;margin:0}
+input,select{width:100%;border:1px solid #d7deea;background:#fff;border-radius:11px;padding:13px;font-size:15px;outline:none}.customer{background:#fff;border-radius:15px;padding:13px;margin:9px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #00000008}.left{display:flex;align-items:center;gap:10px}.avatar{width:42px;height:42px;border-radius:50%;background:#eaf0ff;color:#1746c7;display:grid;place-items:center;font-weight:800}.name{font-weight:750}.small{font-size:12px;color:#778195;margin-top:2px}.empty{text-align:center;padding:28px;background:#fff;border-radius:15px;color:#70798a}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:10}.sheet{width:100%;max-width:720px;background:#fff;border-radius:22px 22px 0 0;padding:19px;max-height:90vh;overflow:auto}.sheet h2{margin:0 0 12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:8px 0}.close{background:#eee;color:#333;width:100%;margin-top:9px}.txn{background:#fff;border-radius:13px;padding:12px;margin:8px 0;border-left:4px solid #1746c7}.txn.give{border-left-color:#c62828}.txn.receive{border-left-color:#14804a}
+.pin{position:fixed;inset:0;background:#f4f7fb;z-index:20;display:none;align-items:center;justify-content:center;padding:25px}.pinbox{background:#fff;padding:24px;border-radius:20px;width:min(390px,100%);text-align:center;box-shadow:0 8px 30px #0001}.pinbox input{text-align:center;font-size:24px;letter-spacing:8px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#182230;color:#fff;padding:11px 16px;border-radius:12px;display:none;z-index:30}.foot{text-align:center;color:#7b8494;font-size:12px;padding:18px 0 28px}
+
+.dark body{background:#101827;color:#eef2f7}.dark .card,.dark .customer,.dark .empty,.dark .sheet,.dark .txn,.dark input,.dark select{background:#182334;color:#eef2f7;border-color:#304057}.dark .muted,.dark .small{color:#aab5c5}.dark .top{background:#0d2d86}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}.mini{background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 12px #00000008}.mini b{display:block;font-size:18px;margin-top:4px}
+.receipt{background:#f8fafc;border:1px dashed #aab5c5;border-radius:14px;padding:14px;margin:10px 0}.dark .receipt{background:#111b2a}
+.editBtn{background:#fff4d6;color:#9a6700}
+@media(max-width:480px){.stat3{grid-template-columns:1fr 1fr}.stat3 .mini:last-child{grid-column:1/-1}}
+
+/* Premium Blue refresh */
+body{background:linear-gradient(180deg,#eef4ff 0,#f7f9fc 220px);transition:.2s}.top{background:linear-gradient(135deg,#123eae,#2874f0 70%,#4f8df7);box-shadow:0 10px 30px #1746c733}.top h1{letter-spacing:.2px}.cards{gap:14px}.card{border:1px solid #e7ecf5;box-shadow:0 8px 25px #1746c714}.actions button{box-shadow:0 5px 15px #1746c720}.customer{border:1px solid #e7ecf5;transition:transform .12s,box-shadow .12s}.customer:active{transform:scale(.99)}.avatar{background:linear-gradient(135deg,#dce9ff,#eef4ff);box-shadow:inset 0 0 0 1px #c8d9fb}.amt{letter-spacing:.2px}.section{margin-top:20px}.quick-title{font-size:12px;color:#6b7280;font-weight:700;margin:3px 0 7px}.empty button{margin-top:10px}.fab{position:fixed;right:18px;bottom:20px;width:58px;height:58px;border-radius:50%;font-size:25px;box-shadow:0 10px 25px #1746c755;z-index:5}.sheet{box-shadow:0 -10px 35px #0002}.sheet label{display:block;margin-top:8px}.receipt{font-size:14px}.dark body{background:#0d1522}.dark .top{box-shadow:none}.dark .customer{border-color:#304057}
+</style></head>
+<body>
+<div id="pinScreen" class="pin"><div class="pinbox"><h2>🔐 मेरा हिसाब</h2><p id="pinMsg">PIN डालें</p><input id="pinInput" maxlength="4" inputmode="numeric"><button class="blue" style="width:100%;margin-top:12px" onclick="unlock()">खोलें</button><p class="muted">पहली बार 4 अंकों का PIN सेट करें।</p></div></div>
+
+<header class="top"><div class="wrap"><h1>मेरा हिसाब</h1><p>आपके कारोबार का स्मार्ट हिसाब</p><div style="margin-top:8px;font-size:11px;opacity:.8">SANJEEV HISAB • हर हिसाब, आसान हिसाब</div><div class="bar"><button class="white" onclick="openModal('settings')">⚙ सेटिंग</button><button class="white" onclick="exportData()">⬇ बैकअप</button><button class="white" onclick="importFile()">⬆ Restore</button></div></div></header>
+<main class="wrap">
+<div class="cards"><div class="card"><div class="muted">कुल लेना है</div><div id="receive" class="amt green">₹0</div></div><div class="card"><div class="muted">कुल देना है</div><div id="pay" class="amt red">₹0</div></div></div>
+<div class="stat3"><div class="mini"><span class="muted">ग्राहक</span><b id="statCustomers">0</b></div><div class="mini"><span class="muted">लेन-देन</span><b id="statTxns">0</b></div><div class="mini"><span class="muted">आज की entries</span><b id="statToday">0</b></div></div>
+<div class="actions"><button class="blue" onclick="openModal('customer')">＋ ग्राहक जोड़ें</button><button class="soft" onclick="openModal('txn')">₹ लेन-देन</button></div>
+<input id="search" placeholder="🔎 ग्राहक खोजें..." oninput="render()">
+<div class="section"><h2>ग्राहक</h2><span id="count" class="muted"></span></div><div class="quick-title">किसी नाम पर टैप करके पूरा खाता खोलें</div><div id="list"></div>
+<div class="foot">Data इसी डिवाइस में save रहता है। Backup करके सुरक्षित रखें।</div>
+<button class="fab blue" onclick="openModal('txn')" aria-label="नया हिसाब">＋</button>
+</main>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet">
+<div id="customerForm"><h2>नया ग्राहक</h2><input id="cname" placeholder="नाम"><input id="cphone" placeholder="मोबाइल नंबर" style="margin-top:8px"><button class="blue" style="width:100%;margin-top:10px" onclick="addCustomer()">सेव करें</button></div>
+<div id="txnForm" style="display:none"><h2>💰 हिसाब लिखें</h2>
+<label class="muted">1. ग्राहक चुनें</label><select id="sel"></select>
+<label class="muted">2. क्या हुआ?</label>
+<div class="row"><button id="giveBtn" class="danger" onclick="chooseType('give')">🔴 उधार दिया</button><button id="receiveBtn" class="soft" onclick="chooseType('receive')">🟢 पैसा मिला</button></div>
+<div id="typeHint" class="muted" style="padding:7px 0">पहले ऊपर से “उधार दिया” या “पैसा मिला” चुनें।</div>
+<label class="muted">3. रकम</label><input id="amount" type="number" inputmode="decimal" placeholder="जैसे 500">
+<label class="muted">4. किस चीज़ का हिसाब? (वैकल्पिक)</label><input id="tnote" placeholder="जैसे राशन, दूध, सामान">
+<button class="blue" style="width:100%;margin-top:10px" onclick="saveTxn()">✅ हिसाब सेव करें</button><div class="muted" style="text-align:center;margin-top:8px">सेव करने के बाद Total अपने-आप बदल जाएगा।</div>
+</div>
+<div id="settingsForm" style="display:none"><h2>⚙️ सेटिंग</h2><button class="soft" style="width:100%" onclick="setupPin()">🔐 PIN बदलें / सेट करें</button>
+<button class="soft" style="width:100%;margin-top:9px" onclick="toggleDark()">🌙 Dark Mode</button><button class="danger" style="width:100%;margin-top:9px" onclick="clearAll()">⚠ पूरा डेटा मिटाएँ</button></div>
+<button class="close" onclick="closeModal()">बंद करें</button></div></div>
+<div id="detailModal" class="modal" onclick="if(event.target===this)closeDetail()"><div class="sheet"><div id="detail"></div><button class="close" onclick="closeDetail()">बंद करें</button></div></div>
+<input id="file" type="file" accept="application/json" style="display:none" onchange="importData(this)">
+<div id="toast" class="toast"></div>
+
+<script>
+const KEY='meraHisabProV2';
+let data=JSON.parse(localStorage.getItem(KEY)||'{"customers":[],"txns":[],"pin":""}');
+let pendingType=null;
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function money(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
+function bal(id){return data.txns.filter(t=>t.customer===id).reduce((s,t)=>s+(t.type==='give'?t.amount:-t.amount),0)}
+function render(){
+ let q=(document.getElementById('search').value||'').toLowerCase();
+ let cs=data.customers.filter(c=>(c.name+' '+c.phone).toLowerCase().includes(q));
+ let rec=0,pay=0;data.customers.forEach(c=>{let b=bal(c.id);if(b>=0)rec+=b;else pay+=-b});
+ receive.textContent=money(rec);payEl=document.getElementById('pay');payEl.textContent=money(pay);count.textContent=data.customers.length;
+ list.innerHTML=cs.length?cs.map(c=>{let b=bal(c.id);return `<div class="customer" onclick="details(${c.id})"><div class="left"><div class="avatar">${c.name[0]}</div><div><div class="name">${esc(c.name)}</div><div class="small">${esc(c.phone||'मोबाइल नंबर नहीं')}</div></div></div><div class="amt ${b>=0?'green':'red'}" style="font-size:15px">${b>=0?'लेना ':'देना '}${money(Math.abs(b))}</div></div>`}).join(''):'<div class="empty">अभी कोई ग्राहक नहीं है।<br>“ग्राहक जोड़ें” से शुरुआत करें।</div>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function openModal(type){
+ modal.style.display='flex';customerForm.style.display=type==='customer'?'block':'none';txnForm.style.display=type==='txn'?'block':'none';settingsForm.style.display=type==='settings'?'block':'none';
+ if(type==='txn'){
+ pendingType=null; typeHint.textContent='पहले ऊपर से “उधार दिया” या “पैसा मिला” चुनें.';
+ giveBtn.className='danger'; receiveBtn.className='soft';
+ sel.innerHTML=data.customers.length?data.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join(''):'<option value="">पहले ग्राहक जोड़ें</option>';
+}
+}
+function closeModal(){modal.style.display='none'}
+function addCustomer(){let n=cname.value.trim(),p=cphone.value.trim();if(!n)return toast('नाम लिखें');data.customers.push({id:Date.now(),name:n,phone:p});cname.value='';cphone.value='';save();closeModal();toast('ग्राहक जुड़ गया')}
+function chooseType(type){
+ pendingType=type;
+ if(type==='give'){giveBtn.className='danger';receiveBtn.className='soft';typeHint.textContent='🔴 ग्राहक ने उधार लिया — यह रकम “लेना है” में जुड़ेगी.'}
+ else {receiveBtn.className='blue';giveBtn.className='danger';typeHint.textContent='🟢 ग्राहक से पैसा मिला — यह रकम उसके बकाये से घटेगी.'}
+}
+function saveTxn(){
+ let id=Number(sel.value),a=Number(amount.value);
+ if(!id)return toast('पहले ग्राहक चुनें');
+ if(!pendingType)return toast('पहले “उधार दिया” या “पैसा मिला” चुनें');
+ if(!a||a<=0)return toast('रकम लिखें');
+ data.txns.push({id:Date.now(),customer:id,amount:a,type:pendingType,date:new Date().toLocaleString('hi-IN'),note:tnote.value.trim()});
+ amount.value='';tnote.value='';pendingType=null;save();closeModal();toast('✅ हिसाब सेव हो गया')
+}
+function addTxn(type){chooseType(type);saveTxn()}
+function details(id){
+ let c=data.customers.find(x=>x.id===id), b=bal(id), ts=data.txns.filter(t=>t.customer===id).reverse();
+ detail.innerHTML=`<h2>${esc(c.name)}</h2><p class="muted">${esc(c.phone||'')}</p><div class="card"><div class="muted">${b>=0?'लेना है':'देना है'}</div><div class="amt ${b>=0?'green':'red'}">${money(Math.abs(b))}</div></div><div class="actions" style="margin:12px 0"><button class="blue" onclick="closeDetail();openTxnForCustomer(${id})">＋ इसी नाम का हिसाब</button><button class="soft" onclick="shareCustomer(${id})">WhatsApp</button></div><div class="receipt"><b>कुल हिसाब</b><div class="amt ${b>=0?'green':'red'}" style="font-size:28px;margin-top:3px">${b>=0?money(b)+' लेना है':money(Math.abs(b))+' देना है'}</div></div><div class="section"><h2>पूरा हिसाब</h2></div>${ts.length?ts.map(t=>`<div class="txn ${t.type}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div><b>${t.type==='give'?'उधार दिया':'पैसा मिला'} — ${money(t.amount)}</b><div class="small">${t.date}${t.note?' · '+esc(t.note):''}</div></div><div style="display:flex;gap:6px"><button class="editBtn" style="padding:8px 9px;font-size:12px" onclick="event.stopPropagation();editTxn(${t.id})">✏️</button><button class="danger" style="padding:8px 10px;font-size:12px" onclick="event.stopPropagation();cutTxn(${t.id})">✂</button></div></div></div>`).join(''):'<div class="empty">कोई लेन-देन नहीं</div>'}`;
+ detailModal.style.display='flex'
+}
+function closeDetail(){detailModal.style.display='none'}
+function openTxnForCustomer(id){
+ openModal('txn');
+ setTimeout(()=>{ sel.value=String(id); },0);
+}
+
+function editTxn(txnId){
+ let t=data.txns.find(x=>x.id===txnId); if(!t)return;
+ let a=prompt('नई रकम लिखें',t.amount); if(a===null)return;
+ a=Number(a); if(!a||a<=0)return toast('रकम सही लिखें');
+ let n=prompt('नोट बदलें',t.note||''); if(n===null)return;
+ t.amount=a;t.note=n;save();let c=data.customers.find(x=>x.id===t.customer);if(c)details(c.id);toast('✏️ हिसाब बदल दिया गया');
+}
+function toggleDark(){document.documentElement.classList.toggle('dark');localStorage.setItem('mhDark',document.documentElement.classList.contains('dark')?'1':'0')}
+if(localStorage.getItem('mhDark')==='1')document.documentElement.classList.add('dark');
+function cutTxn(txnId){
+ let t=data.txns.find(x=>x.id===txnId);
+ if(!t)return;
+ let c=data.customers.find(x=>x.id===t.customer);
+ let label=t.type==='give'?'उधार':'जमा';
+ if(confirm(`${c?.name||'ग्राहक'} के ${label} ${money(t.amount)} वाले हिसाब को काटना है?`)){
+   data.txns=data.txns.filter(x=>x.id!==txnId);
+   save();
+   if(c) details(c.id);
+   toast('✂ हिसाब काट दिया गया');
+ }
+}
+function shareCustomer(id){
+  let c=data.customers.find(x=>x.id===id);
+  if(!c)return;
+  let b=bal(id), ts=data.txns.filter(t=>t.customer===id);
+  let lines=[];
+  lines.push('📒 SANJEEV HISAB');
+  lines.push('ग्राहक: '+c.name);
+  if(c.phone)lines.push('मोबाइल: '+c.phone);
+  lines.push('--------------------');
+  if(ts.length){
+    ts.forEach((t,i)=>{
+      lines.push((i+1)+'. '+(t.type==='give'?'उधार दिया':'पैसा मिला')+' - ₹'+Math.round(t.amount).toLocaleString('en-IN'));
+      if(t.date)lines.push('   तारीख: '+t.date);
+      if(t.note)lines.push('   विवरण: '+t.note);
+    });
+  }else lines.push('अभी कोई लेन-देन नहीं है।');
+  lines.push('--------------------');
+  lines.push('कुल '+(b>=0?'लेना है':'देना है')+': ₹'+Math.round(Math.abs(b)).toLocaleString('en-IN'));
+  lines.push('');
+  lines.push('— SANJEEV HISAB');
+  let msg=lines.join('\n');
+  if(c.phone)location.href='https://wa.me/91'+c.phone.replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
+  else navigator.clipboard?.writeText(msg).then(()=>toast('पूरा हिसाब कॉपी हो गया'));
+}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mera-hisab-backup.json';a.click();toast('Backup तैयार है')}
+function importFile(){file.click()}
+function importData(input){let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.customers||!x.txns)throw 0;data=x;save();toast('Backup restore हो गया')}catch(e){toast('Backup file सही नहीं है')}};r.readAsText(input.files[0])}
+function setupPin(){let p=prompt('4 अंकों का नया PIN डालें');if(p&&/^\\d{4}$/.test(p)){data.pin=p;save();toast('PIN सेट हो गया')}else if(p)toast('PIN 4 अंक का होना चाहिए')}
+function unlock(){let p=pinInput.value;if(!data.pin){if(/^\\d{4}$/.test(p)){data.pin=p;save();pinScreen.style.display='none';toast('PIN सेट हो गया')}else pinMsg.textContent='पहली बार 4 अंकों का PIN डालें'}else if(p===data.pin){pinScreen.style.display='none';pinInput.value=''}else pinMsg.textContent='गलत PIN, फिर कोशिश करें'}
+function clearAll(){if(confirm('क्या सच में पूरा हिसाब मिटाना है? पहले Backup कर लें।')){data={customers:[],txns:[],pin:data.pin};save();closeModal();toast('डेटा मिटा दिया गया')}}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2200)}
+if(data.pin)pinScreen.style.display='flex';render();
+</script></body></html>
